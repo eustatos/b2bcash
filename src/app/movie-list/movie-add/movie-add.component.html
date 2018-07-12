@@ -1,9 +1,31 @@
 <mat-card>
   <mat-card-content>
     <form [formGroup]="addMovieForm">
-      <mat-form-field>
-        <input matInput [formControlName]="movie">
+      <mat-form-field class="form__input">
+        <input matInput
+          type="text"
+          formControlName="movie"
+          [matAutocomplete]="movieList">
+        <mat-error *ngIf="addMovieForm.get('movie').hasError('nonSelectMovie')">
+          Please! Select movie from the list
+        </mat-error>
+        <mat-autocomplete #movieList="matAutocomplete"
+          autoActiveFirstOption
+          [displayWith]="displayFn">
+          <mat-option *ngFor="let movie of movieList$ | async"
+            [value]="movie">
+            {{movie.Title}}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
+      <app-movie-description *ngIf="addMovieForm.valid"
+        [movie]="addMovieForm.get('movie').value"></app-movie-description>
+      <div class="form__submit">
+        <button [disabled]="!addMovieForm.valid"
+          mat-raised-button
+          color="primary"
+          type="submit">Add movie</button>
+      </div>
     </form>
   </mat-card-content>
 </mat-card>

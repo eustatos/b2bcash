@@ -3,10 +3,17 @@ import {
   FormBuilder,
   FormGroup,
   FormControl,
-  Validators
+  Validators,
+  ValidatorFn,
+  AbstractControl
 } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import {
+  switchMap,
+  distinctUntilChanged,
+  debounceTime,
+  filter
+} from 'rxjs/operators';
 
 import { Movie, ErrorResponse } from '../../models';
 
@@ -18,6 +25,7 @@ import { MovieService } from '../../services';
   styleUrls: ['./movie-add.component.css']
 })
 export class MovieAddComponent implements OnInit {
+  minQuery = 4;
   addMovieForm: FormGroup;
   @Output() addMovie: EventEmitter<Movie>;
   movieList$: Observable<Movie[] | ErrorResponse>;
@@ -26,10 +34,28 @@ export class MovieAddComponent implements OnInit {
 
   ngOnInit() {
     this.addMovieForm = this.fb.group({
-      movie: ['', [Validators.required]]
+      movie: ['', [Validators.required, this.selectMovieValidator()]]
     });
-    // this.movieList$ = this.addMovieForm
-    // .get('movie')
-    // .valueChanges.pipe(switchMap());
+    const searchMovie = (val: string) => {
+      return this.movieService.getList(val);
+    };
+    this.movieList$ = this.addMovieForm.get('movie').valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      filter(val => val.length > this.minQuery),
+      switchMap(searchMovie)
+    );
+  }
+
+  displayFn(movie?: Movie) {
+    console.log(movie);
+    return movie ? movie.Title : '';
+  }
+
+  selectMovieValidator(): ValidatorFn {
+    return (control: AbstractControl) => {
+      const forbidden = typeof control.value.Title === 'undefined';
+      return forbidden ? { nonSelectMovie: { value: control.value } } : null;
+    };
   }
 }

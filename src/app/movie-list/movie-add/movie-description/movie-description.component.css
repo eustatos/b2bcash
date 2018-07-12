@@ -1,0 +1,19 @@
+.detail {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 1rem;
+}
+.detail__image-block {
+  width: 120px;
+  flex: none;
+}
+.detail__image {
+  height: 100%;
+}
+
+.detail__description {
+  flex: auto;
+  margin: 1rem 2rem;
+}

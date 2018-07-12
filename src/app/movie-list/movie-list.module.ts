@@ -7,6 +7,7 @@ import { MovieListComponent } from './movie-list.component';
 import { MovieAddComponent } from './movie-add/movie-add.component';
 import { MovieTableComponent } from './movie-table/movie-table.component';
 import { MaterialModule } from '../material';
+import { MovieDescriptionComponent } from '../movie-list/movie-add/movie-description/movie-description.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { MaterialModule } from '../material';
     MaterialModule,
     ReactiveFormsModule
   ],
-  declarations: [MovieListComponent, MovieAddComponent, MovieTableComponent]
+  declarations: [MovieListComponent, MovieAddComponent, MovieTableComponent, MovieDescriptionComponent]
 })
 export class MovieListModule {}
