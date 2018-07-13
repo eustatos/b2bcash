@@ -1,4 +1,5 @@
 <div class="container">
-  <app-movie-add></app-movie-add>
-  <app-movie-table></app-movie-table>
+  <app-movie-add (addMovie)="addMovie($event)"></app-movie-add>
+  <app-movie-table [movieList$]="movieList$"
+    (removedMovie)="removeMovie($event)"></app-movie-table>
 </div>

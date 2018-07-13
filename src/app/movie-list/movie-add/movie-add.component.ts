@@ -27,7 +27,7 @@ import { MovieService } from '../../services';
 export class MovieAddComponent implements OnInit {
   minQuery = 4;
   addMovieForm: FormGroup;
-  @Output() addMovie: EventEmitter<Movie>;
+  @Output() addMovie = new EventEmitter<Movie>();
   movieList$: Observable<Movie[] | ErrorResponse>;
 
   constructor(private fb: FormBuilder, private movieService: MovieService) {}
@@ -48,7 +48,6 @@ export class MovieAddComponent implements OnInit {
   }
 
   displayFn(movie?: Movie) {
-    console.log(movie);
     return movie ? movie.Title : '';
   }
 
@@ -57,5 +56,16 @@ export class MovieAddComponent implements OnInit {
       const forbidden = typeof control.value.Title === 'undefined';
       return forbidden ? { nonSelectMovie: { value: control.value } } : null;
     };
+  }
+
+  addMovieEvent() {
+    this.movieService
+      .getMovie(this.addMovieForm.get('movie').value.imdbID)
+      .subscribe(movie => {
+        this.addMovie.emit(movie);
+        this.addMovieForm.patchValue({
+          movie: ''
+        });
+      });
   }
 }

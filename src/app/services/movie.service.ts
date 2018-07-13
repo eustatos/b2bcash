@@ -32,7 +32,14 @@ export class MovieService {
     return feed$;
   }
 
-  getMovie(id: string) {
-
+  getMovie(id: string): Observable<Movie> {
+    return this._http.get<Movie>(
+      this.url +
+        '?' +
+        qs.stringify({
+          i: id,
+          apiKey: this.token
+        })
+    );
   }
 }

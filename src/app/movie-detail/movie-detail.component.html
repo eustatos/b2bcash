@@ -1,0 +1,12 @@
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <pre>{{movie$ | async | json}}</pre>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button
+        color="primary"
+        (click)="gotoMovieList()">Back to movies list</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

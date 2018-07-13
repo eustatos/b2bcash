@@ -1,16 +1,30 @@
 <div class="mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
+  <mat-table #table
+    [dataSource]="dataSource"
+    matSort
+    aria-label="Elements">
 
-    <!-- Id Column -->
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+    <!-- Title Column -->
+    <ng-container matColumnDef="Title">
+      <mat-header-cell *matHeaderCellDef
+        mat-sort-header>Title</mat-header-cell>
+      <mat-cell *matCellDef="let row" (click)="gotoDetail(row)">{{row.Title}}</mat-cell>
     </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
+    <!-- Year Column -->
+    <ng-container matColumnDef="Year">
+      <mat-header-cell *matHeaderCellDef
+        mat-sort-header>Year</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.Year}}</mat-cell>
+    </ng-container>
+
+    <!-- action Column -->
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef
+        mat-sort-header class="action">Action</mat-header-cell>
+      <mat-cell *matCellDef="let row" class="action">
+        <mat-icon color="primary" (click)="removeMovie(row)">delete</mat-icon>
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

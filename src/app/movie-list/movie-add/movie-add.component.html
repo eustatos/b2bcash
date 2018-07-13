@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-content>
-    <form [formGroup]="addMovieForm">
+    <form [formGroup]="addMovieForm" (submit)="addMovieEvent()">
       <mat-form-field class="form__input">
         <input matInput
           type="text"
