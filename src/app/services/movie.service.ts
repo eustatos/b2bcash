@@ -8,7 +8,7 @@ import * as qs from 'qs';
   providedIn: 'root'
 })
 export class MovieService {
-  url = 'http://www.omdbapi.com/';
+  url = 'https://www.omdbapi.com/';
   token = '75c2a861';
 
   constructor(private _http: HttpClient) {}
